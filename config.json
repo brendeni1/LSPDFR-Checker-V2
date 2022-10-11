@@ -1,0 +1,238 @@
+{
+    "main": {
+        "gta": "1.0.2699.0",
+        "lspdfr": "0.4.8242.35949",
+        "rage": "1.96.1311.16366",
+        "nativeui": "1.9.0.0"
+    },
+    "blacklist": [
+        "Dangerous Callouts",
+        "Dangerouse Callouts",
+        "Dangerouse Callouts Not deleted",
+        "DangerousCallouts",
+        "BasicParkingTickets",
+        "MyCallouts",
+        "Jurisdictions+",
+        "BetterPresence",
+        "BasicCallouts",
+        "BeAPrisonGuard",
+        "BaitCar",
+        "CalloutPack",
+        "CalloutZ",
+        "FBI Callouts",
+        "Felix Callouts",
+        "HypersCallouts",
+        "CountyCallouts",
+        "UniversityCallouts",
+        "UKCallouts",
+        "LoreCallouts",
+        "AmazingCallouts",
+        "HighPriority",
+        "APIExample",
+        "City Callouts",
+        "Corrupt Callouts",
+        "Dangerous Criminal Callouts Pack - Trevor\\\\, Michael\\\\, Franklin",
+        "DutchCallouts",
+        "FIB HRT Callouts",
+        "French Callout",
+        "Interop.MediaPlayer",
+        "Interop.WMPLib",
+        "LSPDFR City Callouts",
+        "PriorityCallouts",
+        "RandomCalls",
+        "Ridiculous Callouts",
+        "SanAndreasCallouts",
+        "terrcall",
+        "test callouts",
+        "YetAnotherEnhancer",
+        "SuperCallouts2",
+        "K9 Callouts",
+        "AirportCallouts",
+        "CrazyCallouts",
+        "belicCallouts",
+        "DefinitiveCallouts",
+        "DeadlyWeapons2",
+        "PoliceMenu",
+        "outfitToggler",
+        "CommonCallouts",
+        "Ambient FX",
+        "MoreRadioChatter",
+        "PursuitPack"
+    ],
+    "hardcoded": {
+        "StopThePed": "4.9.5.1",
+        "Section136Callouts": "1.10.1399.0",
+        "CompuLite": "1.5.2.7",
+        "SpeedRadarLite": "1.5.4.2",
+        "ALPRLite": "1.5.4.2",
+        "UltimateBackup": "1.8.7.0",
+        "SimpleCallouts": "1.3.5.2",
+        "OfficerporciPlugin": "1.9.0.8",
+        "CoastalCallouts": "3.1.8046.41915",
+        "AttemptedCrimeCallouts": "1.7.2.1"
+    },
+    "deprecated": {
+        "Traffic Policer": "(Replaced by StopThePed & Custom Pullover)",
+        "OP_Immersive_Dispatch": "(Features included in GrammarPolice)",
+        "Arrest Manager": "(Replaced by StopThePed)",
+        "ComputerPlus": "(Replaced by CompuLite)",
+        "VocalDispatch": "(Replaced by GrammarPolice)",
+        "CalloutManager": "(Replaced by ForceACallout or Callout Interface)",
+        "tacco_highway_callouts": "(Needs Traffic Policer & Deprecated)",
+        "ChillCallouts": "(Needs Traffic Policer & Deprecated)",
+        "Chill Callouts": "(Needs Traffic Policer & Deprecated)",
+        "PanicButton": "(Included in UltimateBackup)",
+        "HighWay Callouts": "(Terrible Requirements & Deprecated)",
+        "Corpse Inspection": "(Seems Unnecessary w/ Stop The Ped)",
+        "LSPDFR+": "(Stop The Ped, CompuLite Replaced This)",
+        "Interaction+": "(Stop The Ped, CompuLite Replaced This)",
+        "FootPursuitAid": "(In StopThePed)",
+        "Keep Calm": "(In StopThePed/Causes Crashes)",
+        "YetAnotherPartnerMod": "(In StopThePed)",
+        "OJScenarios": "(Requires Callout Manager Which Is Outdated)",
+        "PlateCheckerRemastered": "(In StopThePed)",
+        "SearchWarrant": "(In StopThePed)",
+        "bizzare callouts": "(Temp Deprecation, Author Specified)",
+        "Seatbelt Observation": "(Replaced By Plain Sight)",
+        "Callout": "(Literally The Worst Name Ever lmao)",
+        "Traffic Control": "(Replaced by StopThePed and Scene Manager)",
+        "Officer_Status_Plugin": "(Replaced by GrammarPolice's Features)",
+        "checkup-plugin": "(Replaced by GrammarPolice's Feature)",
+        "SecurityPlus": "(Replaced by Security+ Beta REVAMPED)",
+        "ALPRPlus": "(Replaced by ALPRLite)",
+        "StraysCallouts": null,
+        "FederalCallouts": null,
+        "RichsPoliceEnhancements": null,
+        "AverageCallouts": null,
+        "GangCallouts": null,
+        "RepeatOffender": null,
+        "TrafficTool": null,
+        "TrafficEvents": null,
+        "SaferChasesRPH": null,
+        "NormalCallouts": null,
+        "Lincoln18calls": null,
+        "CodeRedCallouts": null,
+        "Code 3 Callouts": null,
+        "BankCallouts": null,
+        "BlaineCountyCallOuts": null,
+        "NobleCallouts": null,
+        "CrunchBulletCallouts": null,
+        "CalloutsV": null,
+        "GangUnit Callouts": null,
+        "SecondCallout": null,
+        "AssortedCallouts": null,
+        "awsumcallouts": null,
+        "Police Station Armory": null,
+        "RegularCallouts": null,
+        "FayaCallouts": null,
+        "SergeantLSPDFR": null,
+        "VariousCallouts": null,
+        "CheepCallouts": null
+    },
+    "issues": [
+        {
+            "r": "^.*LSPD First Response\\: Exception message\\: Index was out of range\\. Must be non-negative and less than the size of the collection.*PoliceSmartRadio\\.DisplayHandler.*$",
+            "desc": "- Unknown Issue With PoliceSmartRadio Display Index, It Is Advised That You Delete PoliceSmartRadio.",
+            "smart": null
+        },
+        {
+            "r": "(Attempted to read or write protected memory|System.AccessViolationException)(.*ActualResolution)",
+            "desc": "- You Have An Out Of Date RageNativeUI. Please Update It.",
+            "smart": null
+        },
+        {
+            "r": "(?<!(blips\\: System\\.AccessViolationException\\: ))(Attempted to read or write protected memory)(?!((.*)ActualResolution))",
+            "desc": "- You Might Have An Out Of Date RageNativeUI; Try Updating It. Follow Up Indicating If This Issue Is Solved.",
+            "smart": null
+        },
+        {
+            "r": "(System\\.Enum\\.TryParseEnum)(.*)(System\\.Windows\\.Forms\\.KeysConverter)",
+            "desc": "- There Is An Invalid Keybind. Please See My Reply.",
+            "smart": null
+        },
+        {
+            "r": "(Processing cache while it's still in use - one or more subcalls may have caused the thread to yield)",
+            "desc": "- Random Crash Occured. There Is No Fix To This Issue, And You Probably Won't Get It Again (Processing Cache While It's Still In Use).",
+            "smart": null
+        },
+        {
+            "r": "(terminated because it caused the game to freeze)",
+            "desc": "- Your Plugin Timeout Threshold Is Too Low. Launch RAGE Then Immediately Hold Shift. Change \"Plugin Timeout Threshold\" To 60000.",
+            "smart": null
+        },
+        {
+            "r": "(System\\.Collections\\.Generic\\.Dictionary`2\\.get_Item\\(TKey key\\))(.*)(at BetterPresence\\.Main)",
+            "desc": "- You Need To Update BetterPresence.",
+            "smart": null
+        },
+        {
+            "r": "Rage\\.Ped\\.get_SeatIndex\\(\\)",
+            "desc": "- You Are On An Old Version Of RAGE. This Issue Was Fixed In The Most Recent Build, Update It Using The Tutorial Below.",
+            "smart": null
+        },
+        {
+            "r": "Error while hiding ambient game blips(.*)",
+            "desc": "- Go Into Your GTAV\\lspdfr\\lspdfr.ini And Change 'Main.DisableGameBlipHiding' To 'true'",
+            "smart": null
+        },
+        {
+            "r": "Could not find a part of the path(.*)Plugins.LSPDFR.UltimateBackup.DefaultRegions\\.xml(.*)",
+            "desc": "- You Made An Error Inside Of DefaultRegions.xml, Or The File Is Missing.",
+            "smart": null
+        },
+        {
+            "r": "Method not found: 'Void Stealth\\.Common\\.Natives\\.Functions\\.CallByHash",
+            "desc": "- You Are Missing Stealth.Common. Download It From The Link, And Install Into Your GTAV Root.",
+            "smart": null
+        },
+        {
+            "r": "Could not load file or assembly([^\n]+)$",
+            "desc": "- You Are Missing Files From The Following Plugin. Please Re-Install:",
+            "smart": "'(.*?),"
+        },
+        {
+            "r": "Cannot load invalid model with hash.[^\n]*",
+            "desc": "- There is an issue with the following model:",
+            "smart": "(?:Cannot load invalid model with hash\\s)(.[^\n|.]*)"
+        },
+        {
+            "r": "Exception message: Could not find a part of the path\\s'.*'",
+            "desc": "- There is an issue with the following file:",
+            "smart": "(?:'.*?\\(Grand Theft Auto V|GTAV)\\.*?)(.*[^\\.|'])"
+        }
+    ],
+    "incorrect": [
+        {
+            "name": "LemonUI.SHVDN3",
+            "path": "GTAV/scripts (Ensure ScriptHookVDotNet Is Also Installed)"
+        },
+        {
+            "name": "LSPD First Response",
+            "path": "GTAV Root"
+        },
+        {
+            "name": "IPT.Common",
+            "path": "GTAV Root"
+        },
+        {
+            "name": "RAGENativeUI",
+            "path": "GTAV Root"
+        },
+        {
+            "name": "ClearTheWayV",
+            "path": "GTAV/plugins"
+        },
+        {
+            "name": "EUPMenu",
+            "path": "GTAV/plugins"
+        },
+        {
+            "name": "Newtonsoft.Json",
+            "path": "GTAV Root"
+        },
+        {
+            "name": "XSerializer",
+            "path": "GTAV Root"
+        }
+    ]
+}
