@@ -119,5 +119,39 @@ if compareRageVersion:
     print(formatting.statusUpdate('old rage version found', False))
     rageVersion = colored(f"RAGEPluginHook version is out-of-date! Installed: {rageVersion}, Latest: {config['main']['rage']}", 'red', attrs=['bold'])
 else:
-    print(formatting.statusUpdate('good gta5 version found', True))
+    print(formatting.statusUpdate('good rage version found', True))
     rageVersion = colored(f"RAGEPluginHook version is up-to-date! Installed: {rageVersion}, Latest: {config['main']['rage']}", 'green', attrs=['bold'])
+
+
+# Check the user's LSPDFR version.
+lspdfrVersion = mainVersions.lspdfr(logString)
+
+if not lspdfrVersion:
+    print(formatting.statusUpdate('no lspdfr version found', False))
+    cprint(f"ERROR: There was an issue getting the LSPDFR version! The user's game probably crashed before LSPDFR was able to load.", 'red', attrs=['bold'])
+    exit(1)
+
+compareLSPDFRVersion = utils.compareVersion(lspdfrVersion, config['main']['lspdfr'])
+
+if compareLSPDFRVersion:
+    print(formatting.statusUpdate('old lspdfr version found', False))
+    lspdfrVersion = colored(f"LSPDFR version is out-of-date! Installed: {lspdfrVersion}, Latest: {config['main']['lspdfr']}", 'red', attrs=['bold'])
+else:
+    print(formatting.statusUpdate('good lspdfr version found', True))
+    lspdfrVersion = colored(f"LSPDFR version is up-to-date! Installed: {lspdfrVersion}, Latest: {config['main']['lspdfr']}", 'green', attrs=['bold'])
+
+# Check the user's RAGENativeUI version.
+nativeuiVersion = mainVersions.nativeui(logString)
+
+if not nativeuiVersion:
+    print(formatting.statusUpdate('no RAGENativeUI version found\n', False))
+    nativeuiVersion = colored(f"RAGENativeUI version was not found in log! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'yellow', attrs=['bold'])
+else:
+    comparenativeuiVersion = utils.compareVersion(nativeuiVersion, config['main']['nativeui'])
+
+    if comparenativeuiVersion:
+        print(formatting.statusUpdate('old RAGENativeUI version found\n', False))
+        nativeuiVersion = colored(f"RAGENativeUI version is out-of-date! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'red', attrs=['bold'])
+    else:
+        print(formatting.statusUpdate('good RAGENativeUI version found\n', True))
+        nativeuiVersion = colored(f"RAGENativeUI version is up-to-date! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'green', attrs=['bold'])
