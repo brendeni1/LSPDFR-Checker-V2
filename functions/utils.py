@@ -1,4 +1,5 @@
 from packaging import version
+from re import compile, findall, M
 
 def parseVersion(ver: str):
     """
@@ -7,9 +8,11 @@ def parseVersion(ver: str):
     The return type is 'string'.
 
     """
-    parsed = version.parse(ver)
-    
-    return parsed
+    try:
+        parsed = version.parse(ver)
+        return parsed
+    except:
+        return None
 
 def compareVersion(installed: str, latest: str):
     """
@@ -24,3 +27,27 @@ def compareVersion(installed: str, latest: str):
     if installed < latest:
         return True
     return False
+
+def findPlugins(logString: str):
+    """
+    This function finds the plugins in a user's log.
+
+    The return type is 'list'.
+
+    """
+    r = compile("^(?:.*LSPD First Response: )(.*?)(?:, Version=)(\d+\.\d+\.\d+\.\d+)(?:, Culture=)(.*?)(?:, PublicKeyToken=)(\w*|\d*)$", M)
+    search = findall(r, logString)
+    listOfPlugins = []
+    for i in search:
+        listOfPlugins.append(list(i))
+    return listOfPlugins
+
+def getID(ids: dict, name: str):
+    """
+    This function finds the plugins ID.
+
+    The return type is 'int'.
+
+    """
+    id = ids.get(name)
+    return id

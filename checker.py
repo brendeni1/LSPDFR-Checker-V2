@@ -14,6 +14,14 @@ import functions.utils as utils
 # Clear terminal based on OS.
 userOS = os.name
 
+if userOS == 'nt':
+    os.system('cls')
+else:
+    os.system('clear')
+
+# Tell user that the script has started.
+print(formatting.title('SCRIPT STATUS:'), '\n')
+
 # Import config.
 with open("./config.json") as config:
     config = json.load(config)
@@ -22,13 +30,7 @@ with open("./config.json") as config:
 with open("./ids.json") as ids:
     ids = json.load(ids)
 
-if userOS == 'nt':
-    os.system('cls')
-else:
-    os.system('clear')
-
-# Tell user that the script has started.
-print(formatting.title('SCRIPT STATUS:'), '\n')
+print(formatting.statusUpdate('found config files', True))
 
 # Get all files.
 dirFiles = lambda : os.listdir('./')
@@ -155,3 +157,79 @@ else:
     else:
         print(formatting.statusUpdate('good RAGENativeUI version found\n', True))
         nativeuiVersion = colored(f"RAGENativeUI version is up-to-date! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'green', attrs=['bold'])
+
+# Plugin class.
+class Plugin:
+    def __init__(self, name, version, id, culture, publicKeyToken):
+        self.name = name
+        self.version = version
+        self.id = id
+        self.culture = culture
+        self.publicKeyToken = publicKeyToken
+    def getVersion(self):
+        parsed = utils.parseVersion(self.version)
+        return parsed
+
+# Get the user's plugins and their details.
+userPlugins = utils.findPlugins(logString)
+if not userPlugins:
+    print(formatting.statusUpdate('no plugins found\n', False))
+    cprint(f"SCRIPT END: No plugins were found in that log! Manual review is suggested.", 'yellow', attrs=['bold'])
+    exit(0)
+else:
+    print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) found\n', True))
+
+# Parse the user's plugins into classes.
+userPluginClasses = []
+for i in userPlugins:
+    id = utils.getID(ids, i[0])
+    userPluginClasses.append(Plugin(i[0], i[1], id, i[2], i[3]))
+
+userPlugins = userPluginClasses
+
+# "deprecated" is for the "remove these plugins" section, and "badPlugins" is for plugins that will error out if checked -- never use them.
+deprecated = []
+badPlugins = []
+ignored = []
+incorrect = []
+
+# Loop through all of the plugins to check if they are incorrectly installed. Append those to a list for later use if so.
+for plugin in userPlugins:
+    for i in config["incorrect"]:
+        if plugin.name == i["name"]:
+            badPlugins.append(plugin.name)
+            incorrect.append(f"{plugin.name}, Current Folder: GTAV/plugins/LSPDFR - Correct Folder: {i['path']}" if i[
+                'path'] else f"{plugin.name}, Current Folder: GTAV/plugins/LSPDFR - Correct Folder: [Unknown]")
+
+# Loop through all of the plugins to check if they are blacklisted. Append those to a list for later use if so.
+for plugin in userPlugins:
+    if plugin.name in badPlugins:
+        continue
+    if plugin.name in config["blacklist"]:
+        badPlugins.append(plugin.name)
+        ignored.append(f"{plugin.name}, (Ignore because: Blacklisted)")
+
+# Loop through all of the plugins to check if they are deprecated. Append those to a list for later use if so.
+for plugin in userPlugins:
+    if plugin.name in badPlugins:
+        continue
+    if plugin.name in config["deprecated"]:
+        if config["deprecated"][plugin.name]:
+            deprecated.append(f'{plugin.name}, {config["deprecated"][plugin.name]}')
+        else:
+            deprecated.append(plugin.name)
+        badPlugins.append(plugin.name)
+        continue
+
+# Loop through all of the plugins to check if they have an ID. Append those to a list for later use if so.
+for plugin in userPlugins:
+    if plugin.name in badPlugins or config["hardcoded"].get(plugin.name):
+        continue
+    if not plugin.id:
+        badPlugins.append(plugin.name)
+        ignored.append(f"{plugin.name}, (Ignore because: No ID Available)")
+
+for i in ignored:
+    print(i)
+
+# LEFT OFF: Finished checking if the plugin has an ID, is incorrect, needs to be removed (deprecated) or is a badPlugin...
