@@ -1,5 +1,6 @@
 from packaging import version
 from re import compile, findall, M
+from requests import get as getAPI
 
 def parseVersion(ver: str):
     """
@@ -51,3 +52,23 @@ def getID(ids: dict, name: str):
     """
     id = ids.get(name)
     return id
+
+def getLatest(pluginID: str):
+    """
+    This function finds the plugins latest version from the LSPDFR Download Center API.
+
+    The return type is 'str'.
+
+    """
+    response = getAPI(
+        f'https://www.lcpdfr.com/applications/downloadsng/interface/api.php?fileId={pluginID}&textOnly=true&do=checkForUpdates',
+    )
+    
+    if response.status_code >= 500:
+        raise f"There is an issue with the LSPDFR Download Center API at the moment. (Error Code: {response.status_code})"
+    
+    if response.status_code == 429:
+        raise f"You are making too many queries to lcpdfr.com. Try closing some tabs if you have them open. (Error Code: {response.status_code})"
+    
+    latest = response.text
+    return latest

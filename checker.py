@@ -1,3 +1,4 @@
+from inspect import getmembers
 import os
 import re
 from time import time
@@ -166,6 +167,8 @@ class Plugin:
         self.id = id
         self.culture = culture
         self.publicKeyToken = publicKeyToken
+        self.hardcoded = False
+        self.latest = None
     def getVersion(self):
         parsed = utils.parseVersion(self.version)
         return parsed
@@ -177,7 +180,7 @@ if not userPlugins:
     cprint(f"SCRIPT END: No plugins were found in that log! Manual review is suggested.", 'yellow', attrs=['bold'])
     exit(0)
 else:
-    print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) found\n', True))
+    print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) found', True))
 
 # Parse the user's plugins into classes.
 userPluginClasses = []
@@ -229,7 +232,63 @@ for plugin in userPlugins:
         badPlugins.append(plugin.name)
         ignored.append(f"{plugin.name}, (Ignore because: No ID Available)")
 
-for i in ignored:
-    print(i)
+# Notify the user that the plugins were sorted and assigned correctly.
+print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) checked for issues\n', True))
 
-# LEFT OFF: Finished checking if the plugin has an ID, is incorrect, needs to be removed (deprecated) or is a badPlugin...
+# Iterate through all of the plugins and assign their versions.
+for plugin in userPlugins:
+    if plugin.name in badPlugins:
+        continue
+
+    if plugin.name in config["hardcoded"]:
+        plugin.latest = config["hardcoded"][plugin.name]
+        plugin.hardcoded = True
+        continue
+
+    latest = utils.getLatest(plugin.id)
+
+    if not latest:
+        badPlugins.append(plugin.name)
+        ignored.append(f"{plugin.name}, (Ignore Because: Latest Version Not Assigned From API)")
+        continue
+    
+    plugin.latest = latest
+
+# Iterate through all of the plugins and check/compare their versions.
+upToDate = []
+outdated = []
+
+for plugin in userPlugins:
+    print(formatting.statusUpdate(f'checking plugin version for: {plugin.name}, Installed: {plugin.version} - Latest: {plugin.latest}', True))
+
+    pluginString = f"{plugin.name}, Installed: {plugin.version} - Latest: {plugin.latest}"
+    if plugin.name in badPlugins:
+        continue
+    
+    if plugin.hardcoded:
+        pluginString += f" {colored('[HARDCODED]', 'yellow')}"
+    
+    check = utils.compareVersion(plugin.version, plugin.latest)
+
+    if check:
+        outdated.append(pluginString)
+        continue
+
+    upToDate.append(pluginString)
+
+
+
+for i in upToDate:
+    print("up", i)
+print()
+for i in outdated:
+    print("out", i)
+print()
+for i in deprecated:
+    print("dep", i)
+print()
+for i in ignored:
+    print("ign", i)
+print()
+for i in incorrect:
+    print("inc", i)
