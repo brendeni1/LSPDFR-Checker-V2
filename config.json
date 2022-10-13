@@ -193,7 +193,7 @@
         {
             "r": "Cannot load invalid model with hash.[^\n]*",
             "desc": "- There is an issue with the following model:",
-            "smart": "(?:Cannot load invalid model with hash\\s)(.[^\n|.]*)"
+            "smart": "(?:Cannot load invalid model with hash:\\s)(.[^\n|.]*)"
         },
         {
             "r": "Exception message: Could not find a part of the path\\s'.*'",

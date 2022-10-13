@@ -1,7 +1,5 @@
-from inspect import getmembers
 import os
 import re
-from time import time
 import json
 from termcolor import colored, cprint
 
@@ -11,17 +9,13 @@ import functions.formatting as formatting
 import functions.knownIssues as knownIssues
 import functions.mainVersions as mainVersions
 import functions.utils as utils
+import functions.display as display
 
 # Clear terminal based on OS.
+clearscreen = lambda userOS : os.system('cls') if userOS == 'nt' else os.system('clear')
+
 userOS = os.name
-
-if userOS == 'nt':
-    os.system('cls')
-else:
-    os.system('clear')
-
-# Tell user that the script has started.
-print(formatting.title('SCRIPT STATUS:'), '\n')
+clearscreen(userOS)
 
 # Import config.
 with open("./config.json") as config:
@@ -30,8 +24,6 @@ with open("./config.json") as config:
 # Import ids.
 with open("./ids.json") as ids:
     ids = json.load(ids)
-
-print(formatting.statusUpdate('found config files', True))
 
 # Get all files.
 dirFiles = lambda : os.listdir('./')
@@ -49,11 +41,8 @@ logFile = getLog()
 
 # Verify the log file exists.
 if not logFile:
-    print(formatting.statusUpdate('no log found', False))
     cprint(f"ERROR: There is no log in the current directory! Drop a log file in: \"{os.getcwd()}\"", 'red', attrs=['bold'])
     exit(1)
-else:
-    print(formatting.statusUpdate('found log', True), '\n')
 
 # Open log and assign to var.
 with open(f"./{logFile}", encoding="utf8") as log:
@@ -64,47 +53,44 @@ with open(f"./{logFile}", encoding="utf8") as log:
 timeout = logDetails.pluginTimeout(logString)
 
 if not timeout:
-    timeout = '(None Set)'
-    print(formatting.statusUpdate('no plugin timeout threshold found', False))
+    timeout = f"{colored('Plugin Timeout Threshold:', 'green', attrs=['bold'])} (None Set)"
 else:
-    print(formatting.statusUpdate('plugin timeout threshold found', True))
+    timeout = f"{colored('Plugin Timeout Threshold:', 'green', attrs=['bold'])} {timeout}"
 
 # Get command line options.
 commandLine = logDetails.commandLineArgs(logString)
 
 if not commandLine:
-    commandLine = '(None Set)'
-    print(formatting.statusUpdate('no command line args found\n', False))
+    commandLine = f"{colored('Command Line Arguments:', 'green', attrs=['bold'])}: (None Set)"
 else:
-    commandLine = ',\n'.join(list(dict.fromkeys(commandLine)))
-    print(formatting.statusUpdate('command line args found\n', True))
+    commandLine = colored("Command Line Arguments (New Line Delimited):\n", 'green', attrs=['bold']) + ',\n'.join(list(dict.fromkeys(commandLine)))
+
+# Print log details to user.
+display.details(commandLine, timeout)
 
 # Check the log for known issues.
 issues = knownIssues.check(config['issues'], logString)
 
 if not issues:
     issues = [colored('(No Issues Found)', 'green', attrs=['bold'])]
-    print(formatting.statusUpdate('no common issues found\n', True))
 else:
-    issues = [colored(x + '\n', 'red', attrs=['bold']) for x in issues]
-    print(formatting.statusUpdate('common issues found\n', True))
+    issues = [colored(x, 'red', attrs=['bold']) for x in issues]
 
+# Print issues in log to user.
+display.knownIssues(issues)
 
 # Check the user's GTA 5 version.
 gtaVersion = mainVersions.gta(logString)
 
 if not gtaVersion:
-    print(formatting.statusUpdate('no gta5 version found', False))
     cprint(f"ERROR: There was an issue getting the GTA 5 version! Please report this to me (DarkVypr).", 'red', attrs=['bold'])
     exit(1)
 
 compareGTAVersion = utils.compareVersion(gtaVersion, config['main']['gta'])
 
 if compareGTAVersion:
-    print(formatting.statusUpdate('old gta5 version found', False))
     gtaVersion = colored(f"GTA 5 version is out-of-date! Installed: {gtaVersion}, Latest: {config['main']['gta']}", 'red', attrs=['bold'])
 else:
-    print(formatting.statusUpdate('good gta5 version found', True))
     gtaVersion = colored(f"GTA 5 version is up-to-date! Installed: {gtaVersion}, Latest: {config['main']['gta']}", 'green', attrs=['bold'])
 
 
@@ -112,52 +98,48 @@ else:
 rageVersion = mainVersions.rage(logString)
 
 if not rageVersion:
-    print(formatting.statusUpdate('no rage version found', False))
     cprint(f"ERROR: There was an issue getting the RAGE version! Please report this to me (DarkVypr).", 'red', attrs=['bold'])
     exit(1)
 
 compareRageVersion = utils.compareVersion(rageVersion, config['main']['rage'])
 
 if compareRageVersion:
-    print(formatting.statusUpdate('old rage version found', False))
     rageVersion = colored(f"RAGEPluginHook version is out-of-date! Installed: {rageVersion}, Latest: {config['main']['rage']}", 'red', attrs=['bold'])
 else:
-    print(formatting.statusUpdate('good rage version found', True))
     rageVersion = colored(f"RAGEPluginHook version is up-to-date! Installed: {rageVersion}, Latest: {config['main']['rage']}", 'green', attrs=['bold'])
 
+# Print GTA and RAGE Version to user.
+display.gtaRage(gtaVersion, rageVersion)
 
 # Check the user's LSPDFR version.
 lspdfrVersion = mainVersions.lspdfr(logString)
 
 if not lspdfrVersion:
-    print(formatting.statusUpdate('no lspdfr version found', False))
-    cprint(f"ERROR: There was an issue getting the LSPDFR version! The user's game probably crashed before LSPDFR was able to load.", 'red', attrs=['bold'])
+    cprint(f"\nERROR: There was an issue getting the LSPDFR version! The user's game probably crashed before LSPDFR was able to load.", 'red', attrs=['bold'])
     exit(1)
 
 compareLSPDFRVersion = utils.compareVersion(lspdfrVersion, config['main']['lspdfr'])
 
 if compareLSPDFRVersion:
-    print(formatting.statusUpdate('old lspdfr version found', False))
     lspdfrVersion = colored(f"LSPDFR version is out-of-date! Installed: {lspdfrVersion}, Latest: {config['main']['lspdfr']}", 'red', attrs=['bold'])
 else:
-    print(formatting.statusUpdate('good lspdfr version found', True))
     lspdfrVersion = colored(f"LSPDFR version is up-to-date! Installed: {lspdfrVersion}, Latest: {config['main']['lspdfr']}", 'green', attrs=['bold'])
 
 # Check the user's RAGENativeUI version.
 nativeuiVersion = mainVersions.nativeui(logString)
 
 if not nativeuiVersion:
-    print(formatting.statusUpdate('no RAGENativeUI version found\n', False))
     nativeuiVersion = colored(f"RAGENativeUI version was not found in log! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'yellow', attrs=['bold'])
 else:
     comparenativeuiVersion = utils.compareVersion(nativeuiVersion, config['main']['nativeui'])
 
     if comparenativeuiVersion:
-        print(formatting.statusUpdate('old RAGENativeUI version found\n', False))
         nativeuiVersion = colored(f"RAGENativeUI version is out-of-date! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'red', attrs=['bold'])
     else:
-        print(formatting.statusUpdate('good RAGENativeUI version found\n', True))
         nativeuiVersion = colored(f"RAGENativeUI version is up-to-date! Installed: {nativeuiVersion}, Latest: {config['main']['nativeui']}", 'green', attrs=['bold'])
+
+# Print LSPDFR and NATIVEUI Version to user.
+display.lspdfrNative(lspdfrVersion, nativeuiVersion)
 
 # Plugin class.
 class Plugin:
@@ -174,13 +156,13 @@ class Plugin:
         return parsed
 
 # Get the user's plugins and their details.
-userPlugins = utils.findPlugins(logString)
+userPlugins = utils.findPlugins(logString, logSplit)
 if not userPlugins:
-    print(formatting.statusUpdate('no plugins found\n', False))
-    cprint(f"SCRIPT END: No plugins were found in that log! Manual review is suggested.", 'yellow', attrs=['bold'])
+    cprint(f"\nSCRIPT END: No plugins were found in that log! Manual review is suggested.", 'yellow', attrs=['bold'])
     exit(0)
 else:
-    print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) found', True))
+    print(formatting.section(f"Found Plugins ({len(userPlugins)}):", True))
+    print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) found\n', True))
 
 # Parse the user's plugins into classes.
 userPluginClasses = []
@@ -232,9 +214,6 @@ for plugin in userPlugins:
         badPlugins.append(plugin.name)
         ignored.append(f"{plugin.name}, (Ignore because: No ID Available)")
 
-# Notify the user that the plugins were sorted and assigned correctly.
-print(formatting.statusUpdate(f'{len(userPlugins)} plugin(s) checked for issues\n', True))
-
 # Iterate through all of the plugins and assign their versions.
 for plugin in userPlugins:
     if plugin.name in badPlugins:
@@ -259,7 +238,7 @@ upToDate = []
 outdated = []
 
 for plugin in userPlugins:
-    print(formatting.statusUpdate(f'checking plugin version for: {plugin.name}, Installed: {plugin.version} - Latest: {plugin.latest}', True))
+    print(formatting.statusUpdate(f'checking plugin version for: {plugin.name}, Installed: {plugin.version} - Latest: {plugin.latest}', True), flush=True)
 
     pluginString = f"{plugin.name}, Installed: {plugin.version} - Latest: {plugin.latest}"
     if plugin.name in badPlugins:
@@ -276,19 +255,24 @@ for plugin in userPlugins:
 
     upToDate.append(pluginString)
 
+# Get lengths of arrays for display selection and general info.
+lenUpToDate = len(upToDate)
+lenOutdated = len(outdated)
+lenDeprecated = len(deprecated)
+lenIgnored = len(ignored)
+lenIncorrect = len(incorrect)
 
+# Print up-to-date plugins if applicable.
+display.upToDate(upToDate, lenUpToDate)
 
-for i in upToDate:
-    print("up", i)
-print()
-for i in outdated:
-    print("out", i)
-print()
-for i in deprecated:
-    print("dep", i)
-print()
-for i in ignored:
-    print("ign", i)
-print()
-for i in incorrect:
-    print("inc", i)
+# Print out-of-date plugins if applicable.
+display.outdated(outdated, lenOutdated)
+ 
+# Print deprecated plugins if applicable.
+display.deprecated(deprecated, lenDeprecated)
+ 
+# Print incorrectly installed plugins if applicable.
+display.incorrect(incorrect, lenIncorrect)
+ 
+# Print ignored plugins if applicable.
+display.ignored(ignored, lenIgnored)

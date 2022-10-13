@@ -27,7 +27,20 @@ def separator():
     The return type is 'string'.
 
     """
-    return "\n\n----------\n\n"
+    return "\n\n----------\n\n\n"
+
+def section(label: str, separated: bool):
+    """
+    This function returns a section, optionally separated by the separator.
+    
+    The return type is 'string'.
+
+    """
+    formatted = f"{col.BOLD}{col.UNDERLINE}{label}{col.END}\n"
+    if separated:
+        formatted = separator() + f"{col.BOLD}{col.UNDERLINE}{label}{col.END}\n"
+        return formatted
+    return formatted
 
 def statusUpdate(description: str, isSuccess: bool):
     """

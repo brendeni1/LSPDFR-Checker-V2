@@ -1,5 +1,5 @@
 from packaging import version
-from re import compile, findall, M
+from re import compile, findall, M, I
 from requests import get as getAPI
 
 def parseVersion(ver: str):
@@ -29,19 +29,43 @@ def compareVersion(installed: str, latest: str):
         return True
     return False
 
-def findPlugins(logString: str):
+def findPlugins(logString: str, logSplit: list):
     """
     This function finds the plugins in a user's log.
 
     The return type is 'list'.
 
     """
-    r = compile("^(?:.*LSPD First Response: )(.*?)(?:, Version=)(\d+\.\d+\.\d+\.\d+)(?:, Culture=)(.*?)(?:, PublicKeyToken=)(\w*|\d*)$", M)
-    search = findall(r, logString)
-    listOfPlugins = []
-    for i in search:
-        listOfPlugins.append(list(i))
-    return listOfPlugins
+    rStart = compile(".*Folder\sis\s.*plugins\\\lspdfr", M | I)
+    
+    searchStart = findall(rStart, logString)
+    
+    if not searchStart:
+        return None
+
+    rEnd = compile("^.*LSPD First Response: Creating Plugin: .*", M | I)
+    
+    searchEnd = findall(rEnd, logString)
+    
+    if not searchEnd:
+        return None
+
+    start = logSplit.index(searchStart[0]) + 1
+    end = logSplit.index(searchEnd[0])
+
+    section = logSplit[start:end]
+
+    r = compile("^(?:.*LSPD First Response: )(.*?)(?:, Version=)(\d+\.\d+\.\d+\.\d+)(?:, Culture=)(.*?)(?:, PublicKeyToken=)(\w*|\d*)$", M | I)
+
+    foundPlugins = []
+
+    for i in section:
+        breakdown = findall(r, i)
+        if not breakdown:
+            continue
+        foundPlugins.append(breakdown[0])
+
+    return foundPlugins
 
 def getID(ids: dict, name: str):
     """
