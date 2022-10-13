@@ -2,6 +2,9 @@
 
 This is the less scuffed, scuffed version of [LSPDFR Update Checker v1](https://github.com/DarkVypr/LSPDFR-Update-Checker)! I've mostly changed the structure of the code -- bare with me as i'm still learning lol.
 
+## TLDR:
+v2 works on the same principles as v1; following the same usage process will net you the expected outcomes. Not a crazy amount has changed in terms of end-user expierience/setup & use.
+
 # Setting It Up
 
 This program is relatively easy to set up. I personally just use it inside of VS code. If you don't know what VSC is/how to use it, that is on you to figure out. Once you have it opened in VS code, you can use the terminal to install these: `pip install requests packaging termcolor`.
