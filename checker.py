@@ -267,7 +267,6 @@ lenIncorrect = len(incorrect)
 display.upToDate(upToDate, lenUpToDate)
 
 # Print out-of-date plugins if applicable.
-display.outdated(outdated, lenOutdated)
  
 # Print deprecated plugins if applicable.
 display.deprecated(deprecated, lenDeprecated)
@@ -277,3 +276,4 @@ display.incorrect(incorrect, lenIncorrect)
  
 # Print ignored plugins if applicable.
 display.ignored(ignored, lenIgnored)
+print()
