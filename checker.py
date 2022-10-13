@@ -1,15 +1,16 @@
+import json
 import os
 import re
-import json
+
 from termcolor import colored, cprint
 
 # Custom module imports
-import functions.logDetails as logDetails
+import functions.display as display
 import functions.formatting as formatting
 import functions.knownIssues as knownIssues
+import functions.logDetails as logDetails
 import functions.mainVersions as mainVersions
 import functions.utils as utils
-import functions.display as display
 
 # Clear terminal based on OS.
 clearscreen = lambda userOS : os.system('cls') if userOS == 'nt' else os.system('clear')
