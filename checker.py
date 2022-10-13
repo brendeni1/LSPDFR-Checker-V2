@@ -276,4 +276,3 @@ display.incorrect(incorrect, lenIncorrect)
  
 # Print ignored plugins if applicable.
 display.ignored(ignored, lenIgnored)
-print()
