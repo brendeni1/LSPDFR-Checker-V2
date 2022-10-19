@@ -196,6 +196,11 @@
             "smart": "(?:Cannot load invalid model with hash:\\s)(.[^\n|.]*)"
         },
         {
+            "r": "Exception message\\: Cannot load an invalid weapon asset",
+            "desc": "- There is an invalid weapon asset. (See Log)",
+            "smart": null
+        },
+        {
             "r": "Exception message: Could not find a part of the path\\s'.*'",
             "desc": "- There is an issue with the following file:",
             "smart": "(?:'.*?\\(Grand Theft Auto V|GTAV)\\.*?)(.*[^\\.|'])"
