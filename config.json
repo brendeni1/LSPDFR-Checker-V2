@@ -208,6 +208,16 @@
             "r": "Exception message: Could not find a part of the path\\s'.*'",
             "desc": "- There is an issue with the following file:",
             "smart": "(?:'.*?\\(Grand Theft Auto V|GTAV)\\.*?)(.*[^\\.|'])"
+        },
+        {
+            "r": "LSPD First Response:.*Failed to decrypt file\\:.*",
+            "desc": "- You need to re-install the following file as it's corrupt:",
+            "smart": "(?:Failed to decrypt file\\:)(.*)"
+        },
+        {
+            "r": "Failed to find settings file at.*lspdfr\\.ini\\. Only default values are available",
+            "desc": "- There was an issue finding the lspdfr.ini file inside of \"GTA/lspdfr\". Please ensure this file exists.",
+            "smart": null
         }
     ],
     "incorrect": [
