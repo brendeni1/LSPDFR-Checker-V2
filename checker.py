@@ -77,7 +77,7 @@ if not commandLine:
 else:
     commandLine = colored(
         "Command Line Arguments (New Line Delimited):\n", "green", attrs=["bold"]
-    ) + ",\n".join(list(dict.fromkeys(commandLine)))
+    ) + ",\n\n".join(list(dict.fromkeys(commandLine)))
 
 # Print log details to user.
 display.details(commandLine, timeout)
