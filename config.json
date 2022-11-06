@@ -2,7 +2,7 @@
     "main": {
         "gta": "1.0.2699.16",
         "lspdfr": "0.4.8334.1822",
-        "rage": "1.99.1316.16417",
+        "rage": "1.100.1318.16428",
         "nativeui": "1.9.0.0"
     },
     "blacklist": [
@@ -100,6 +100,7 @@
         "ALPRPlus": "(Replaced by ALPRLite)",
         "Megaphone UI": null,
         "MoreRadioChatter": "(Replaced By XScanner)",
+        "RPH_Delete_Vehicle": "(Every Trainer Has This Feature)",
         "StraysCallouts": null,
         "Wilderness Callouts": null,
         "BetterEMS": null,
@@ -197,7 +198,7 @@
         {
             "r": "Cannot load invalid model with hash.[^\n]*",
             "desc": "- There is an issue with the following model:",
-            "smart": "(?:Cannot load invalid model with hash:\\s)(.[^\n|.]*)"
+            "smart": "(?:Cannot load invalid model with hash:?\\s)(.[^\n|.]*)"
         },
         {
             "r": "Exception message\\: Cannot load an invalid weapon asset",
@@ -238,11 +239,19 @@
             "path": "GTAV Root"
         },
         {
+            "name": "NothingHappened",
+            "path": "GTAV/plugins"
+        },
+        {
             "name": "ClearTheWayV",
             "path": "GTAV/plugins"
         },
         {
             "name": "EUPMenu",
+            "path": "GTAV/plugins"
+        },
+        {
+            "name": "KTFDO",
             "path": "GTAV/plugins"
         },
         {
