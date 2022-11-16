@@ -64,7 +64,6 @@
     "StopRightThere": "35565",
     "CleanUpTheMess": "33986",
     "CoastalCallouts": "25465",
-    "PoliceSmartRadio": "15354",
     "FelonyStop": "17428",
     "StopAimingAtCops": "26746",
     "whateverscallouts": "24601",
@@ -89,5 +88,7 @@
     "MoreRobberies": "22692",
     "SearchVehiclePlugin": "26499",
     "PursuitOnTheFly": "10450",
+    "OCSpray": "27760",
+    "FireCallouts": "26877",
     "VarietyCallouts": "23277"
 }
