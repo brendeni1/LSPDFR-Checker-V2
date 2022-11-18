@@ -209,8 +209,8 @@
         },
         {
             "r": "Exception message: Could not find a part of the path\\s'.*'",
-            "desc": "- There is an issue with the following file:",
-            "smart": "(?:'.*?\\(Grand Theft Auto V|GTAV)\\.*?)(.*[^\\.|'])"
+            "desc": "- There was an issue finding the following file:",
+            "smart": "(?:'.*?)((?:Grand Theft Auto V|GTAV).*[^\\.|'])"
         },
         {
             "r": "LSPD First Response:.*Failed to decrypt file\\:.*",

@@ -1,18 +1,19 @@
-from re import findall, compile, S, M ,I
+from re import findall, compile, S, M, I
+
 
 def check(config: dict, log: str):
     """
     This function returns a list of commonly known log issues. See the readme for more info. (Scuffed)
-    
+
     The return type is 'list'.
 
     """
-    remDup = lambda x : list(dict.fromkeys(x))
+    remDup = lambda x: list(dict.fromkeys(x))
 
     issues = []
 
     for i in config:
-        r = compile(i['r'], S | M | I)
+        r = compile(i["r"], S | M | I)
 
         results = findall(r, log)
 
@@ -20,11 +21,11 @@ def check(config: dict, log: str):
             continue
         results = remDup(results)
 
-        if not i['smart']:
+        if not i["smart"]:
             issues.append(i["desc"])
             continue
 
-        r = compile(i['smart'], I)
+        r = compile(i["smart"], I)
 
         for j in results:
             smartSearch = findall(r, j)
