@@ -19,7 +19,7 @@ hash = input("Input the car's hash: ")
 os.system('cls')
 
 # Open the hashes file.
-with open("./hashes.json") as hashes:
+with open("./hashes/hashes.json") as hashes:
     hashes = json.load(hashes)
 
 # Call the function to get the car's name.
