@@ -89,10 +89,10 @@ def getLatest(pluginID: str):
     )
     
     if response.status_code >= 500:
-        raise f"There is an issue with the LSPDFR Download Center API at the moment. (Error Code: {response.status_code})"
+        raise Exception(f"There is an issue with the LSPDFR Download Center API at the moment. (Error Code: {response.status_code})")
     
     if response.status_code == 429:
-        raise f"You are making too many queries to lcpdfr.com. Try closing some tabs if you have them open. (Error Code: {response.status_code})"
+        raise Exception(f"You are making too many queries to lcpdfr.com. Try closing some tabs if you have them open. (Error Code: {response.status_code})")
     
     latest = response.text
     return latest
