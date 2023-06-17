@@ -1,8 +1,8 @@
 {
     "main": {
-        "gta": "1.0.2845.0",
-        "lspdfr": "0.4.8433.20359",
-        "rage": "1.104.1327.16500",
+        "gta": "1.0.2944.0",
+        "lspdfr": "0.4.8564.34056",
+        "rage": "1.105.1329.16507",
         "nativeui": "1.9.2.0"
     },
     "blacklist": [
@@ -53,7 +53,8 @@
         "outfitToggler",
         "CommonCallouts",
         "Ambient FX",
-        "PursuitPack"
+        "PursuitPack",
+        "dlGlobal"
     ],
     "hardcoded": {
         "StopThePed": "4.9.5.1",
@@ -63,7 +64,7 @@
         "ALPRLite": "1.5.4.2",
         "UltimateBackup": "1.8.7.0",
         "SimpleCallouts": "1.3.5.2",
-        "OfficerporciPlugin": "1.9.2.4",
+        "OfficerporciPlugin": "1.9.2.7",
         "CoastalCallouts": "3.1.8046.41915",
         "AttemptedCrimeCallouts": "1.7.2.1"
     },
