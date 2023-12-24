@@ -55,7 +55,10 @@
         "Ambient FX",
         "PursuitPack",
         "Beachfront Callouts",
-        "dlGlobal"
+        "dlGlobal",
+        "UrbanCallouts",
+        "CountyCalls",
+        "TheFeedFlusher"
     ],
     "hardcoded": {
         "StopThePed": "4.9.5.1",
