@@ -1,5 +1,5 @@
 from packaging import version
-from re import compile, findall, M, I
+from re import compile, findall, M, I, sub
 from requests import get as getAPI
 
 def parseVersion(ver: str):
@@ -94,5 +94,5 @@ def getLatest(pluginID: str):
     if response.status_code == 429:
         raise Exception(f"You are making too many queries to lcpdfr.com. Try closing some tabs if you have them open. (Error Code: {response.status_code})")
     
-    latest = response.text
+    latest = sub(r"(\()|(\))", "", response.text)
     return latest

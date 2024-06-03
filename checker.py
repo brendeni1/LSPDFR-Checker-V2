@@ -12,6 +12,8 @@ import functions.logDetails as logDetails
 import functions.mainVersions as mainVersions
 import functions.utils as utils
 
+os.system('color')
+
 # Clear terminal based on OS.
 clearscreen = lambda userOS: os.system("cls") if userOS == "nt" else os.system("clear")
 
