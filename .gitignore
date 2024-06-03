@@ -3,3 +3,4 @@ test.py
 .vscode/
 functions/__pycache__
 run.bat
+.idea/
