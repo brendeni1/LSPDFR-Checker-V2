@@ -46,7 +46,7 @@ def nativeui(log: str):
     The return type is 'string'.
 
     """
-    r = compile('(?:.*RageNativeUI(?:.*)?\sversion:\s)(.*)', I)
+    r = compile('(?:.*RageNativeUI(?:.*)?\sversion:\s)((?:\d\.?)+)', I)
     search = findall(r, log)
     if not search:
         return None
